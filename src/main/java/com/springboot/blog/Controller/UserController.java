@@ -21,6 +21,8 @@ import com.springboot.blog.Services.UserService;
 import com.springboot.blog.Utils.ApiResponse;
 import com.springboot.blog.Utils.RandomIdGenerator;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/user/")
 public class UserController {
@@ -43,7 +45,7 @@ public class UserController {
 
 	// POST - Create User
 	@PostMapping("/")
-	public ResponseEntity<UserDto> CreateUser(@RequestBody UserDto userDto) {
+	public ResponseEntity<UserDto> CreateUser(@Valid @RequestBody UserDto userDto) {
 		userDto.setId(RandomIdGenerator.newIdGenrator());
 		UserDto createdUserDto = this.userService.CreateUser(userDto);
 		return new ResponseEntity<>(createdUserDto, HttpStatus.CREATED);
@@ -51,7 +53,7 @@ public class UserController {
 
 	// PUT - Update USer
 	@PutMapping("/{userId}")
-	public ResponseEntity<UserDto> UpdateUser(@RequestBody UserDto userDto, @PathVariable("userId") int userId) {
+	public ResponseEntity<UserDto> UpdateUser(@Valid @RequestBody UserDto userDto, @PathVariable("userId") int userId) {
 		UserDto updatedUserDto = this.userService.UpdateUSer(userDto, userId);
 		return new ResponseEntity(updatedUserDto, HttpStatus.ACCEPTED);
 	}
