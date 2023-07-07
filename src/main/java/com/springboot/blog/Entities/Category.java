@@ -2,9 +2,6 @@ package com.springboot.blog.Entities;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
-import org.hibernate.annotations.Columns;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -19,19 +16,18 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "users")
+@Table(name = "categories")
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
-public class User {
+public class Category {
 	@Id
-	private int id;
-	@Column(nullable = false, length = 1000)
-	private String name;
-	private String email;
-	private String password;
-	private String about;
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private int categoryId;
+	@Column(length = 100, nullable = false)
+	private String categoryTitle;
+	private String categoryDescription;
+
+	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
 	private List<Post> posts = new ArrayList<>();
 }

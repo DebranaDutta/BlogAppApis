@@ -12,6 +12,7 @@ import com.springboot.blog.Exceptions.ResourceNotFoundException;
 import com.springboot.blog.Payloads.UserDto;
 import com.springboot.blog.Repositories.UserRepository;
 import com.springboot.blog.Services.UserService;
+import com.springboot.blog.Utils.RandomIdGenerator;
 
 @Component
 public class UserServiceImpl implements UserService {
@@ -24,9 +25,10 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDto CreateUser(UserDto userDto) {
-		User user = this.Convert_UserDtoToUser(userDto);
+		userDto.setId(RandomIdGenerator.newIdGenrator());
+		User user = this.Convert_UserDto_To_User(userDto);
 		User savedUser = this.userRepository.save(user);
-		return this.Convert_UserToUserDTO(savedUser);
+		return this.Convert_User_To_UserDTO(savedUser);
 	}
 
 	@Override
@@ -37,19 +39,19 @@ public class UserServiceImpl implements UserService {
 		user.setPassword(userDto.getPassword());
 		user.setAbout(userDto.getAbout());
 		User updatedUser = this.userRepository.save(user);
-		return this.Convert_UserToUserDTO(updatedUser);
+		return this.Convert_User_To_UserDTO(updatedUser);
 	}
 
 	@Override
 	public UserDto GetUserByID(int userId) {
 		User user = this.userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
-		return this.Convert_UserToUserDTO(user);
+		return this.Convert_User_To_UserDTO(user);
 	}
 
 	@Override
 	public List<UserDto> GetAllUser() {
 		List<User> users = this.userRepository.findAll();
-		List<UserDto> userDtos = users.stream().map(user -> this.Convert_UserToUserDTO(user)).collect(Collectors.toList());
+		List<UserDto> userDtos = users.stream().map(user -> this.Convert_User_To_UserDTO(user)).collect(Collectors.toList());
 		return userDtos;
 	}
 
@@ -70,12 +72,12 @@ public class UserServiceImpl implements UserService {
 	/* End of conversion of Object manually */
 
 	/* Start of conversion of Object Using ModelMapper */
-	public User Convert_UserDtoToUser(UserDto userDto) {
+	public User Convert_UserDto_To_User(UserDto userDto) {
 		User user = this.modelMapper.map(userDto, User.class);
 		return user;
 	}
 
-	public UserDto Convert_UserToUserDTO(User user) {
+	public UserDto Convert_User_To_UserDTO(User user) {
 		UserDto userDto = this.modelMapper.map(user, UserDto.class);
 		return userDto;
 	}

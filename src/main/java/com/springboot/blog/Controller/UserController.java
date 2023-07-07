@@ -46,7 +46,6 @@ public class UserController {
 	// POST - Create User
 	@PostMapping("/")
 	public ResponseEntity<UserDto> CreateUser(@Valid @RequestBody UserDto userDto) {
-		userDto.setId(RandomIdGenerator.newIdGenrator());
 		UserDto createdUserDto = this.userService.CreateUser(userDto);
 		return new ResponseEntity<>(createdUserDto, HttpStatus.CREATED);
 	}
@@ -62,7 +61,7 @@ public class UserController {
 	@DeleteMapping("/{userId}")
 	public ResponseEntity<ApiResponse> DeleteUser(@PathVariable("userId") int userId) {
 		this.userService.DeleteUser(userId);
-		return new ResponseEntity(new ApiResponse("User Dleted Successfully", true), HttpStatus.OK);
+		return new ResponseEntity(new ApiResponse("User Deleted Successfully", true), HttpStatus.OK);
 	}
 
 }

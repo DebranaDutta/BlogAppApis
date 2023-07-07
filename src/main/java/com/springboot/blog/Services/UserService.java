@@ -4,10 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.springboot.blog.Entities.User;
 import com.springboot.blog.Payloads.UserDto;
 
-@Component
 public interface UserService {
 	UserDto CreateUser(UserDto userDto);
 
