@@ -24,7 +24,7 @@ import com.springboot.blog.Utils.RandomIdGenerator;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/user/")
+@RequestMapping("/api/user")
 public class UserController {
 	@Autowired
 	private UserService userService;
