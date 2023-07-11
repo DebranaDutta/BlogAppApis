@@ -34,9 +34,6 @@ public class PostController {
 	@Autowired
 	private FileService fileService;
 
-	@Value("${project.image}")
-	private String path;
-
 	// POST - Create Post
 	@PostMapping("/user/{userId}/category/{categoryId}")
 	public ResponseEntity<PostDto> CreatePost(@RequestBody PostDto postDto, @PathVariable("userId") int userId, @PathVariable("categoryId") int categoryId) {
